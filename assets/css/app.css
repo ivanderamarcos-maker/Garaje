@@ -435,6 +435,10 @@ a { color: var(--cobre); }
   z-index: 20;
 }
 
+.capa[hidden] {
+  display: none !important;
+}
+
 .panel {
   width: min(560px, 100%);
   max-height: min(90dvh, 820px);

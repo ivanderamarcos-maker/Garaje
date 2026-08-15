@@ -1,4 +1,4 @@
-const CACHE = 'garaje-v9';
+const CACHE = 'garaje-v10';
 const ASSETS = [
   './',
   './index.html',

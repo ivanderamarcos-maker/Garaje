@@ -550,17 +550,19 @@ async function pintar() {
 }
 
 document.addEventListener('click', async (evento) => {
-  const go = evento.target.closest('[data-go]');
+  const origen = evento.target instanceof Element ? evento.target : evento.target.parentElement;
+  if (!origen) return;
+  const go = origen.closest('[data-go]');
   if (go) {
     evento.preventDefault();
     ir(go.dataset.go);
     return;
   }
-  if (evento.target.closest('[data-cerrar]')) {
+  if (origen.closest('[data-cerrar]')) {
     cerrarCapa();
     return;
   }
-  const boton = evento.target.closest('[data-accion]');
+  const boton = origen.closest('[data-accion]');
   if (!boton) return;
   const accion = boton.dataset.accion;
   if (accion === 'nuevo-vehiculo') panel('Nuevo vehículo', formVehiculo());
