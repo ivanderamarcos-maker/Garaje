@@ -1,4 +1,4 @@
-const CACHE = 'garaje-v10';
+const CACHE = 'garaje-v11';
 const ASSETS = [
   './',
   './index.html',
@@ -6,7 +6,7 @@ const ASSETS = [
   './assets/css/app.css',
   './assets/js/db.js',
   './assets/js/app.js',
-  './assets/images/marca.svg',
+  './assets/images/marca.png',
   './assets/images/icon-192.png',
   './assets/images/icon-512.png',
   './assets/images/apple-touch-icon.png',

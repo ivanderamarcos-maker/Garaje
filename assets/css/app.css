@@ -112,11 +112,12 @@ a { color: var(--cobre); }
 }
 
 .marca {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
   flex: none;
-  box-shadow: 0 0 0 1px rgba(201, 163, 106, 0.45);
+  object-fit: cover;
+  background: #1a1410;
 }
 
 .tope-marca, .tope > div:not(.tope-acciones) {

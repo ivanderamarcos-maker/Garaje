@@ -158,7 +158,7 @@ async function vistaGaraje() {
     const pendientes = (await deVehiculo('pendientes', v.id)).filter((p) => p.estado !== 'hecho');
     return `
       <a class="tarjeta enlace" href="#/vehiculo/${v.id}">
-        <div class="foto-vehiculo">${foto ? `<img src="${foto}" alt="">` : `<img src="assets/images/marca.svg" alt="" width="64">`}</div>
+        <div class="foto-vehiculo">${foto ? `<img src="${foto}" alt="">` : `<img src="assets/images/marca.png" alt="" width="64">`}</div>
         <div class="cuerpo-tarjeta">
           <strong>${esc(nombreVehiculo(v))}</strong>
           <p class="meta">${esc([v.marca, v.modelo, v.anio].filter(Boolean).join(' · ') || v.tipo || 'Vehículo')}</p>
@@ -170,7 +170,7 @@ async function vistaGaraje() {
 
   app.innerHTML = `
     <header class="tope">
-      <img class="marca" src="assets/images/marca.svg" alt="">
+      <img class="marca" src="assets/images/marca.png" alt="Garaje">
       <div class="tope-marca">
         <h1>Garaje</h1>
         <p>Tus vehículos, a mano</p>
