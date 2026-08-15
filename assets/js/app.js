@@ -120,13 +120,13 @@ function panel(titulo, html) {
 function tope(titulo, sub, extra = '') {
   return `
     <header class="tope">
-      <a href="#/" class="btn texto" data-go="#/">←</a>
-      <div>
+      <a href="#/" class="btn-atras" data-go="#/" aria-label="Volver">←</a>
+      <div class="tope-marca">
         <h2>${esc(titulo)}</h2>
         ${sub ? `<p>${esc(sub)}</p>` : ''}
       </div>
-      <div class="tope-acciones">${extra}</div>
-    </header>`;
+    </header>
+    ${extra ? `<div class="acciones-pagina">${extra}</div>` : ''}`;
 }
 
 function vacio(texto, accion = '') {
@@ -171,15 +171,13 @@ async function vistaGaraje() {
   app.innerHTML = `
     <header class="tope">
       <img class="marca" src="assets/images/marca.svg" alt="">
-      <div>
+      <div class="tope-marca">
         <h1>Garaje</h1>
-        <p>Tus vehículos, el taller y lo que hay que hacer.</p>
+        <p>Tus vehículos, a mano</p>
       </div>
-      <div class="tope-acciones">
-        <button class="btn secundario" data-go="#/ajustes">Ajustes</button>
-        <button class="btn" data-accion="nuevo-vehiculo">Añadir vehículo</button>
-      </div>
+      <button class="btn-icono" type="button" data-go="#/ajustes">Ajustes</button>
     </header>
+    <button class="btn btn-bloque" type="button" data-accion="nuevo-vehiculo">Añadir vehículo</button>
     ${activos.length ? `<div class="rejilla">${(await Promise.all(activos.map(tarjeta))).join('')}</div>` : vacio('Aún no hay vehículos. Añade el primero cuando quieras.')}
     ${archivados.length ? `
       <div class="seccion-titulo"><h3>Anteriores</h3></div>
@@ -296,10 +294,7 @@ async function vistaVehiculo(id) {
 
   app.innerHTML = `
     ${tope(nombreVehiculo(v), [v.matricula, fmtKm(v.km)].filter(Boolean).join(' · '), `
-      <button class="btn secundario" data-accion="editar-vehiculo" data-id="${v.id}">Editar</button>
-      ${v.estado === 'archivado'
-        ? `<button class="btn suave" data-accion="activar-vehiculo" data-id="${v.id}">Volver a activos</button>`
-        : `<button class="btn secundario" data-accion="archivar-vehiculo" data-id="${v.id}">Archivar</button>`}
+      <button class="btn" type="button" data-accion="editar-vehiculo" data-id="${v.id}">Editar</button>
     `)}
     ${foto ? `<div class="tarjeta" style="margin-bottom:16px"><div class="foto-vehiculo" style="height:180px"><img src="${foto}" alt=""></div></div>` : ''}
     ${avisos.length ? `<div class="avisos">${avisos.map((a) => `<div class="aviso">${esc(a)}</div>`).join('')}</div>` : '<div class="aviso ok">Nada urgente de momento.</div>'}
@@ -310,6 +305,11 @@ async function vistaVehiculo(id) {
           <span>${desc}</span>
           ${n !== '' ? `<em>${n}</em>` : ''}
         </a>`).join('')}
+    </div>
+    <div class="acciones-pagina" style="margin-top:16px">
+      ${v.estado === 'archivado'
+        ? `<button class="btn secundario" type="button" data-accion="activar-vehiculo" data-id="${v.id}">Volver al garaje</button>`
+        : `<button class="btn secundario" type="button" data-accion="archivar-vehiculo" data-id="${v.id}">Ya no lo tengo</button>`}
     </div>`;
 }
 
@@ -567,7 +567,7 @@ document.addEventListener('click', async (evento) => {
   if (accion === 'editar-vehiculo') panel('Editar vehículo', formVehiculo(await db.get('vehiculos', boton.dataset.id)));
   if (accion === 'archivar-vehiculo') {
     const v = await db.get('vehiculos', boton.dataset.id);
-    if (v && confirm('Se archivará, pero no se borra su historial. ¿Continuar?')) {
+    if (v && confirm('Se guardará en Anteriores. El historial no se borra. ¿Continuar?')) {
       v.estado = 'archivado';
       await db.put('vehiculos', v);
       ir('#/');
